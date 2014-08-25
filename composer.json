@@ -1,0 +1,35 @@
+{
+    "name": "stayallive/laravel-azure-blob-queue",
+    "description": "Extending the Laravel queue to support the Microsoft Azure Blob Queue.",
+    "keywords": [
+        "laravel",
+        "azure",
+        "blob",
+        "queue"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alex Bouma",
+            "email": "me@alexbouma.me"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "pear",
+            "url": "http://pear.php.net"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/queue": "4.2.*",
+        "illuminate/support": "4.2.*",
+        "stayallive/microsoft-windowsazure": "0.4.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Stayallive\\LaravelAzureBlobQueue\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
