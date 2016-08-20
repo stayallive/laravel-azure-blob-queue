@@ -8,7 +8,8 @@ use WindowsAzure\Queue\QueueRestProxy;
 use WindowsAzure\Queue\Models\CreateMessageOptions;
 use WindowsAzure\Queue\Models\PeekMessagesOptions;
 
-class AzureQueue extends Queue implements QueueInterface {
+class AzureQueue extends Queue implements QueueInterface
+{
 
     /**
      * The Azure IServiceBus instance.
@@ -32,7 +33,8 @@ class AzureQueue extends Queue implements QueueInterface {
      *
      * @return \Stayallive\LaravelAzureBlobQueue\AzureQueue
      */
-    public function __construct(QueueRestProxy $azure, $default) {
+    public function __construct(QueueRestProxy $azure, $default)
+    {
         $this->azure   = $azure;
         $this->default = $default;
     }
@@ -46,7 +48,8 @@ class AzureQueue extends Queue implements QueueInterface {
      *
      * @return void
      */
-    public function push($job, $data = '', $queue = null) {
+    public function push($job, $data = '', $queue = null)
+    {
         $this->pushRaw($this->createPayload($job, $data), $queue);
     }
 
@@ -59,7 +62,8 @@ class AzureQueue extends Queue implements QueueInterface {
      *
      * @return mixed
      */
-    public function pushRaw($payload, $queue = null, array $options = array()) {
+    public function pushRaw($payload, $queue = null, array $options = array())
+    {
         $this->azure->createMessage($this->getQueue($queue), $payload);
     }
 
@@ -73,7 +77,8 @@ class AzureQueue extends Queue implements QueueInterface {
      *
      * @return void
      */
-    public function later($delay, $job, $data = '', $queue = null) {
+    public function later($delay, $job, $data = '', $queue = null)
+    {
         $payload = $this->createPayload($job, $data);
 
         $options = new CreateMessageOptions;
@@ -89,7 +94,8 @@ class AzureQueue extends Queue implements QueueInterface {
      *
      * @return \Illuminate\Queue\Jobs\Job|null
      */
-    public function pop($queue = null) {
+    public function pop($queue = null)
+    {
         $queue = $this->getQueue($queue);
 
         $result = $this->azure->peekMessages($queue, new PeekMessagesOptions);
@@ -110,7 +116,8 @@ class AzureQueue extends Queue implements QueueInterface {
      *
      * @return string
      */
-    public function getQueue($queue) {
+    public function getQueue($queue)
+    {
         return $queue ?: $this->default;
     }
 
@@ -119,8 +126,8 @@ class AzureQueue extends Queue implements QueueInterface {
      *
      * @return \WindowsAzure\Queue\Internal\IQueue
      */
-    public function getAzure() {
+    public function getAzure()
+    {
         return $this->azure;
     }
-
 }
