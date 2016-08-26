@@ -7,7 +7,8 @@ use Illuminate\Container\Container;
 use WindowsAzure\Queue\QueueRestProxy;
 use WindowsAzure\Queue\Models\WindowsAzureQueueMessage;
 
-class AzureJob extends Job {
+class AzureJob extends Job
+{
 
     /**
      * The Azure QueueRestProxy instance.
@@ -40,7 +41,8 @@ class AzureJob extends Job {
      *
      * @return \Stayallive\LaravelAzureBlobQueue\AzureJob
      */
-    public function __construct(Container $container, QueueRestProxy $azure, WindowsAzureQueueMessage $job, $queue) {
+    public function __construct(Container $container, QueueRestProxy $azure, WindowsAzureQueueMessage $job, $queue)
+    {
         $this->azure     = $azure;
         $this->job       = $job;
         $this->queue     = $queue;
@@ -52,7 +54,8 @@ class AzureJob extends Job {
      *
      * @return void
      */
-    public function fire() {
+    public function fire()
+    {
         $this->resolveAndFire(json_decode($this->getRawBody(), true));
     }
 
@@ -61,7 +64,8 @@ class AzureJob extends Job {
      *
      * @return void
      */
-    public function delete() {
+    public function delete()
+    {
         $this->azure->deleteMessage($this->queue, $this->job->getMessageId(), $this->job->getPopReceipt());
     }
 
@@ -72,7 +76,8 @@ class AzureJob extends Job {
      *
      * @return void
      */
-    public function release($delay = 0) {
+    public function release($delay = 0)
+    {
         $this->azure->updateMessage($this->queue, $this->job->getMessageId(), $this->job->getPopReceipt(), null, $delay);
     }
 
@@ -81,7 +86,8 @@ class AzureJob extends Job {
      *
      * @return int
      */
-    public function attempts() {
+    public function attempts()
+    {
         return $this->job->getDequeueCount();
     }
 
@@ -90,7 +96,8 @@ class AzureJob extends Job {
      *
      * @return \Illuminate\Container\Container
      */
-    public function getContainer() {
+    public function getContainer()
+    {
         return $this->container;
     }
 
@@ -99,7 +106,8 @@ class AzureJob extends Job {
      *
      * @return \WindowsAzure\Queue\QueueRestProxy
      */
-    public function getAzure() {
+    public function getAzure()
+    {
         return $this->azure;
     }
 
@@ -108,7 +116,8 @@ class AzureJob extends Job {
      *
      * @return \WindowsAzure\Queue\Models\WindowsAzureQueueMessage
      */
-    public function getAzureJob() {
+    public function getAzureJob()
+    {
         return $this->job;
     }
 
@@ -117,8 +126,8 @@ class AzureJob extends Job {
      *
      * @return string
      */
-    public function getRawBody() {
+    public function getRawBody()
+    {
         return $this->job->getMessageText();
     }
-
 }
